@@ -3,7 +3,18 @@ var router = express.Router();
 const usersRepo = require('../repositories/users')
 
 router.get('/', async function (req, res, next) {
-    res.send(await usersRepo.getAllUsers())
+    const offset = req.query.offset
+    const limit = req.query.limit
+    if (typeof offset != 'undefined' && typeof limit != 'undefined') {
+        res.send(await usersRepo.getUsers(offset, limit))
+    } else {
+        res.send(await usersRepo.getAllUsers())
+    }
+});
+
+router.get('/:offset/:offset', async function (req, res, next) {
+    const id = req.params.id;
+    res.send(await usersRepo.getUser(id))
 });
 
 router.get('/admins', async function (req, res, next) {
@@ -21,6 +32,11 @@ router.get('/authors', async function (req, res, next) {
 router.get('/:id', async function (req, res, next) {
     const id = req.params.id;
     res.send(await usersRepo.getUser(id))
+});
+
+router.get('/email/:email', async function (req, res, next) {
+    const email = req.params.email;
+    res.send(await usersRepo.getUserByEmail(email))
 });
 
 router.delete('/:id', async function (req, res, next) {
