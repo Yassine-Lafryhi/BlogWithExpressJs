@@ -60,12 +60,21 @@ module.exports = {
             where: {id: id}
         }).then(result => {
             if (result) {
-                return {message: "Updated successfully !"}
+                return {
+                    status: 200,
+                    message: "Updated successfully !"
+                }
             } else {
-                return {message: `Cannot update user with id=${id}. Maybe it does not exist !`}
+                return {
+                    status: 404,
+                    message: `Cannot update user with id=${id}. Maybe it does not exist !`
+                }
             }
         }).catch(error => {
-            return {message: 'An error occurred : ' + error.message}
+            return {
+                status: 500,
+                message: 'An error occurred : ' + error.message
+            }
         });
     },
     deleteUser(id) {
@@ -73,12 +82,21 @@ module.exports = {
             where: {id: id}
         }).then(result => {
             if (result) {
-                return {message: "Deleted successfully !"}
+                return {
+                    status: 200,
+                    message: "Deleted successfully !"
+                }
             } else {
-                return {message: `Cannot delete user with id=${id}. Maybe it does not exist !`}
+                return {
+                    status: 404,
+                    message: `Cannot delete user with id=${id}. Maybe it does not exist !`
+                }
             }
         }).catch(error => {
-            return {message: 'An error occurred : ' + error.message}
+            return {
+                status: 500,
+                message: 'An error occurred : ' + error.message
+            }
         });
     },
     deleteAllUsers() {
