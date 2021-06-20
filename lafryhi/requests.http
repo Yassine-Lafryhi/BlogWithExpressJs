@@ -45,13 +45,116 @@ Content-Type: application/json
   "role": "admin"
 }
 
-### Create new user
-PUT http://localhost:3000/users/21
-Content-Type: application/json
+
+### Get all articles
+GET http://localhost:3000/articles
+
+### Get articles by Id
+GET http://localhost:3000/articles/1
+
+### Get articles by Id
+GET http://localhost:3000/articles/87
+
+### Add new article
+POST http://localhost:3000/articles
+content-type: application/json
 
 {
-  "username": "yassine",
-  "email": "y.lafryhi@gmail.com",
-  "password": "OVdsvyI&7*bd#4K",
-  "role": "author"
+  "title": "Test",
+  "content": "This as an article content",
+  "published": 1,
+  "userId" : 12
 }
+
+### Delete an article
+DELETE http://localhost:3000/articles/11
+
+### Update an article
+PUT http://localhost:3000/articles/9
+content-type: application/json
+
+{
+  "title": "Test",
+  "content": "This as an article content",
+  "published": 0,
+  "userId" : 10
+}
+
+### Step over the first 2 artices and take 3 articles
+GET http://localhost:3000/articles/offset/2/limit/3
+
+### Get article by user Id
+GET http://localhost:3000/users/12/articles
+
+### Get article by title
+GET http://localhost:3000/articles/title/Test
+
+GET articles number
+###
+GET http://localhost:3000/articles?number
+
+
+### Get all comments
+http://localhost:3000/comments
+
+### Get comments number
+GET http://localhost:3000/comments?number
+
+### Get comment by Id
+GET http://localhost:3000/comments/4
+
+### Get comment by Id
+GET http://localhost:3000/comments/99
+
+### Get comments of an article by Id
+GET http://localhost:3000/articles/5/comments
+
+### Add new comment
+POST http://localhost:3000/comments
+content-type: application/json
+
+{
+  "content": "This is a comment content",
+  "ArticleId": 1
+}
+
+### Update a comment
+PUT http://localhost:3000/comments/11
+content-type: application/json
+
+{
+  "content": "This is a comment content",
+  "ArticleId": 1
+}
+
+### Delete a comment vy Id
+DELETE http://localhost:3000/comments/11
+
+
+### Get all tags
+GET http://localhost:3000/tags
+
+### get tags number
+GET http://localhost:3000/tags?number
+
+### Get tag by Id
+GET http://localhost:3000/tags/3
+
+### Add new tag
+POST http://localhost:3000/tags
+content-type: application/json
+
+{
+  "name": "Tag 1"
+}
+
+### Update a tag
+PUT http://localhost:3000/tags/11
+content-type: application/json
+
+{
+  "name": "tag 2"
+}
+
+
+
