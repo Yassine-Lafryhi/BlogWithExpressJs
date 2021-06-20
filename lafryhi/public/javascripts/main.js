@@ -37,8 +37,10 @@ function login() {
                 }).then((result) => {
                     let role = data.role;
                     let token = data.token;
+                    let id = data.id;
                     cookie.set('token', token);
                     cookie.set('role', role);
+                    cookie.set('id', id);
                     if (role === 'admin') {
                         window.location.href = "manage-users.html";
                     } else if (role === 'author') {
@@ -91,14 +93,12 @@ function createUser() {
             timer: 2000
         })
     } else {
-
         const body = {
             username: username,
             email: email,
             password: password,
             role: role
         }
-        console.log(body)
         fetch('/users', {
             headers: {
                 'Accept': 'application/json',
@@ -127,6 +127,66 @@ function createUser() {
                     password.value = "";
                     role.value = "";
                     getUsersList();
+                });
+            } else {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: data.message,
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+            }
+        });
+    }
+}
+
+function createArticle() {
+    let title = document.getElementById("title").value;
+    let content = document.getElementById("content").value;
+    let userId = cookie.get("id");
+    let published = document.getElementById("published").value;
+    if (title.toString().trim() === '' || content.toString().trim() === '' || published.toString().trim() === '') {
+        Swal.fire({
+            position: 'center',
+            icon: 'warning',
+            title: 'Please fill in all the fields !',
+            showConfirmButton: false,
+            timer: 2000
+        })
+    } else {
+        const body = {
+            title: title,
+            content: content,
+            UserId: userId,
+            published: published
+        }
+        fetch('/articles', {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + cookie.get('token')
+            },
+            method: 'POST',
+            body: JSON.stringify(body)
+        }).then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            if (data.hasOwnProperty('id')) {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Article created successfully !',
+                    showConfirmButton: false,
+                    timer: 2000
+                }).then((result) => {
+                    let title = document.getElementById("title");
+                    let content = document.getElementById("content");
+                    let published = document.getElementById("published");
+                    title.value = "";
+                    content.value = "";
+                    published.value = "";
+                    getArticlesList();
                 });
             } else {
                 Swal.fire({
@@ -179,10 +239,10 @@ function getArticlesList(offset) {
             let element = '<div style="text-align: center" class="col-md-4">' +
                 '<div style="height: 260px; margin-bottom: 12px" class="card">' +
                 '<div class="card-header">' +
-                '<h5 style="text-align: center" class="card-title">'+data[i].title+'</h5>' +
+                '<h5 style="text-align: center" class="card-title">' + data[i].title + '</h5>' +
                 '</div>' +
                 '<div class="card-body">' +
-                '<p>'+data[i].content+'</p>' +
+                '<p>' + data[i].content + '</p>' +
                 '</div>' +
                 '</div>' +
                 '</div>';

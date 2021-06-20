@@ -67,7 +67,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpZCI6MSwid
   "title": "Test",
   "content": "This as an article content",
   "published": 1,
-  "userId" : 12
+  "UserId" : 12
 }
 
 ### Delete an article
@@ -83,7 +83,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpZCI6MSwid
   "title": "Test",
   "content": "This as an article content",
   "published": 0,
-  "userId" : 10
+  "UserId" : 10
 }
 
 ### Step over the first 2 artices and take 3 articles
