@@ -1,4 +1,4 @@
-var usersNumber = 0;
+var articlesNumber = 0;
 var number = 0;
 
 function login() {
@@ -319,10 +319,7 @@ function sendUpdateRequest(id) {
     }
 }
 
-
 function deleteUser(id) {
-
-
     Swal.fire({
         title: 'Are tou sure that you want to delete this user ?',
         showDenyButton: true,
@@ -330,7 +327,6 @@ function deleteUser(id) {
         confirmButtonText: `Yes`,
         denyButtonText: `No`,
     }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
             fetch('/users/' + id, {
                 headers: {
@@ -359,7 +355,6 @@ function deleteUser(id) {
     })
 }
 
-
 function updateUser(id) {
     fetch('/users/' + id, {
         headers: {
@@ -380,12 +375,45 @@ function updateUser(id) {
         password.value = data.password;
         role.value = data.role;
         addOrUpdate.innerHTML = "Update"
-        addOrUpdate.setAttribute("onclick", "sendUpdateRequest(" + data.id + ")")
+        addOrUpdate.setAttribute("onclick", "sendUpdateRequest(" + data.id + ")");
+
+        Swal.fire({
+            position: 'center',
+            icon: 'info',
+            title: 'Please enter the new information !',
+            showConfirmButton: false,
+            timer: 1000
+        }).then((result) => {
+        });
     });
 }
 
-
 function getNextArticles() {
+    document.getElementById("previous").disabled = false;
+    if (number < articlesNumber) {
+        getArticlesList(number);
+        number += 5;
+    }
+    if (number === articlesNumber) {
+        document.getElementById("next").disabled = true;
+        number -= 5;
+    }
+}
+
+function getPreviousArticles() {
+    if (number === 5) {
+        document.getElementById("previous").disabled = true;
+    }
+    if (number > 0) {
+        number -= 5;
+        getArticlesList(number);
+    }
+    if (document.getElementById("next").disabled) {
+        document.getElementById("next").disabled = false;
+    }
+}
+
+function getNextUsers() {
     document.getElementById("previous").disabled = false;
     if (number < usersNumber) {
         getUsersList(number);
@@ -397,20 +425,7 @@ function getNextArticles() {
     }
 }
 
-
-function getNextElements() {
-    document.getElementById("previous").disabled = false;
-    if (number < usersNumber) {
-        getArticlesList(number);
-        number += 5;
-    }
-    if (number === usersNumber) {
-        document.getElementById("next").disabled = true;
-        number -= 5;
-    }
-}
-
-function getPreviousElements() {
+function getPreviousUsers() {
     if (number === 5) {
         document.getElementById("previous").disabled = true;
     }
@@ -423,7 +438,6 @@ function getPreviousElements() {
     }
 }
 
-
 function getUsersNumber() {
     fetch('/users?number', {
         method: 'GET'
@@ -431,12 +445,11 @@ function getUsersNumber() {
         return response.json();
     }).then(function (data) {
         usersNumber = parseInt(data.message);
-        getNextElements();
+        getNextUsers();
         document.getElementById("previous").disabled = true;
     });
 
 }
-
 
 function getArticlesNumber() {
     fetch('/articles?number', {
@@ -444,8 +457,8 @@ function getArticlesNumber() {
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
-        usersNumber = parseInt(data.message);
-        getNextElements();
+        articlesNumber = parseInt(data.message);
+        getNextArticles();
         document.getElementById("previous").disabled = true;
     });
 
