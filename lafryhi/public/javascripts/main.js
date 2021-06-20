@@ -1,3 +1,6 @@
+var usersNumber = 0;
+var number = 0;
+
 function createUser() {
     let username = document.getElementById("username").value;
     let email = document.getElementById("email").value;
@@ -61,8 +64,8 @@ function createUser() {
     }
 }
 
-function getUsersList() {
-    fetch('/users', {
+function getUsersList(offset) {
+    fetch('/users/offset/' + offset + '/limit/' + 5, {
         headers: {
             'Accept': 'application/json',
         },
@@ -75,11 +78,11 @@ function getUsersList() {
         $('#usersList').html('');
         for (var i = 0; i < data.length; i++) {
             tr = $('<tr/>');
-            tr.append("<td>" + data[i].id + "</td>");
-            tr.append("<td>" + data[i].username + "</td>");
-            tr.append("<td>" + data[i].email + "</td>");
-            tr.append("<td>" + data[i].role + "</td>");
-            tr.append("<td><button onclick='updateUser(" + data[i].id + ")' style='margin-right: 8px' class=\"btn btn-warning btn-round\" type=\"button\">Update</button><button onclick='deleteUser(" + data[i].id + ")' class=\"btn btn-danger btn-round\" type=\"button\">Delete</button></td>")
+            tr.append("<td style='text-align: center'> " + data[i].id + "</td>");
+            tr.append("<td style='text-align: center'>" + data[i].username + "</td>");
+            tr.append("<td style='text-align: center'>" + data[i].email + "</td>");
+            tr.append("<td style='text-align: center'>" + data[i].role + "</td>");
+            tr.append("<td style='text-align: center'><button onclick='updateUser(" + data[i].id + ")' style='margin-right: 8px' class=\"btn btn-warning btn-round\" type=\"button\">Update</button><button onclick='deleteUser(" + data[i].id + ")' class=\"btn btn-danger btn-round\" type=\"button\">Delete</button></td>")
             $('#usersList').append(tr);
         }
     });
@@ -199,4 +202,44 @@ function updateUser(id) {
         addOrUpdate.innerHTML = "Update"
         addOrUpdate.setAttribute("onclick", "sendUpdateRequest(" + data.id + ")")
     });
+}
+
+
+function getNextElements() {
+    document.getElementById("previous").disabled = false;
+    if (number < usersNumber) {
+        getUsersList(number);
+        number += 5;
+    }
+    if (number === usersNumber) {
+        document.getElementById("next").disabled = true;
+        number-=5;
+    }
+}
+
+function getPreviousElements() {
+    if (number === 5) {
+        document.getElementById("previous").disabled = true;
+    }
+    if (number > 0) {
+        number -= 5;
+        getUsersList(number);
+    }
+    if (document.getElementById("next").disabled) {
+        document.getElementById("next").disabled = false;
+    }
+}
+
+
+function getUsersNumber() {
+    fetch('/users?number', {
+        method: 'GET'
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        usersNumber = parseInt(data.message);
+        getNextElements();
+        document.getElementById("previous").disabled = true;
+    });
+
 }

@@ -113,4 +113,13 @@ module.exports = {
             return {message: 'An error occurred : ' + error.message}
         });
     },
+    getUsersNumber() {
+        return User.findAndCountAll({
+            where: {},
+        })
+            .then(result => {
+                return {message: result.count}
+            });
+
+    }
 }

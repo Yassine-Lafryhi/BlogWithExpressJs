@@ -3,13 +3,17 @@ var router = express.Router();
 const usersRepo = require('../repositories/users')
 
 router.get('/', async function (req, res, next) {
-    const offset = req.query.offset
-    const limit = req.query.limit
-    if (typeof offset != 'undefined' && typeof limit != 'undefined') {
-        res.send(await usersRepo.getUsers(offset, limit))
-    } else {
+    const number = req.query.number;
+    if(number === undefined)
         res.send(await usersRepo.getAllUsers())
-    }
+    else
+        res.send(await usersRepo.getUsersNumber())
+});
+
+router.get('/offset/:offset/limit/:limit', async function (req, res, next) {
+    const offset = req.params.offset
+    const limit = req.params.limit
+    res.send(await usersRepo.getUsers(offset, limit))
 });
 
 router.get('/:offset/:offset', async function (req, res, next) {
