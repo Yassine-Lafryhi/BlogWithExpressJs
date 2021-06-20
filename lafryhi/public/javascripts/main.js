@@ -1,6 +1,82 @@
 var usersNumber = 0;
 var number = 0;
 
+function login() {
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    if (email.toString().trim() === '' || password.toString().trim() === '') {
+        Swal.fire({
+            position: 'center',
+            icon: 'warning',
+            title: 'Please fill in all the fields !',
+            showConfirmButton: false,
+            timer: 2000
+        })
+    } else {
+        const body = {
+            email: email,
+            password: password
+        }
+        fetch('/users/login', {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(body)
+        }).then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            if (data.code === 1) {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Logged in successfully !',
+                    showConfirmButton: false,
+                    timer: 2000
+                }).then((result) => {
+                    let role = data.role;
+                    let token = data.token;
+                    cookie.set('token', token);
+                    cookie.set('role', role);
+                    if (role === 'admin') {
+                        window.location.href = "manage-users.html";
+                    } else if (role === 'author') {
+                        window.location.href = "manage-articles.html";
+                    } else {
+                        window.location.href = "view-articles.html";
+                    }
+                });
+            } else {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: data.message,
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+            }
+        });
+    }
+}
+
+function logout() {
+
+    Swal.fire({
+        title: 'Are you sure that you want to log out ?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: `Yes`,
+        denyButtonText: `No`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            cookie.remove('token');
+            cookie.remove('role');
+            window.location.href = "login.html";
+        }
+    })
+}
+
 function createUser() {
     let username = document.getElementById("username").value;
     let email = document.getElementById("email").value;
@@ -26,7 +102,8 @@ function createUser() {
         fetch('/users', {
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + cookie.get('token')
             },
             method: 'POST',
             body: JSON.stringify(body)
@@ -113,7 +190,8 @@ function sendUpdateRequest(id) {
         fetch('/users/' + id, {
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + cookie.get('token')
             },
             method: 'PUT',
             body: JSON.stringify(body)
@@ -157,26 +235,42 @@ function sendUpdateRequest(id) {
 
 
 function deleteUser(id) {
-    fetch('/users/' + id, {
-        headers: {
-            'Accept': 'application/json',
-        },
-        method: 'DELETE'
-    }).then(function (response) {
-        return response.json();
-    }).then(function (data) {
-        if (data.status === 200) {
-            Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: 'User deleted successfully !',
-                showConfirmButton: false,
-                timer: 1000
-            }).then((result) => {
-                getUsersList();
+
+
+    Swal.fire({
+        title: 'Are tou sure that you want to delete this user ?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: `Yes`,
+        denyButtonText: `No`,
+    }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            fetch('/users/' + id, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + cookie.get('token')
+                },
+                method: 'DELETE'
+            }).then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                if (data.status === 200) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'User deleted successfully !',
+                        showConfirmButton: false,
+                        timer: 1000
+                    }).then((result) => {
+                        location.reload();
+                    });
+                }
             });
+        } else if (result.isDenied) {
+            Swal.fire('Not deleted !', '', 'info')
         }
-    });
+    })
 }
 
 
@@ -213,7 +307,7 @@ function getNextElements() {
     }
     if (number === usersNumber) {
         document.getElementById("next").disabled = true;
-        number-=5;
+        number -= 5;
     }
 }
 

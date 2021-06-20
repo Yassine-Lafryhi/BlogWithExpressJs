@@ -81,13 +81,9 @@ router.put('/:id', jwt({algorithms: ['HS256'], secret: secret}), async function 
     }
 });
 
-router.post('/login', jwt({algorithms: ['HS256'], secret: secret}), async function (req, res, next) {
-    if (req.user.role === 'admin') {
-        const data = req.body;
-        res.send(await usersRepo.login(data));
-    } else {
-        res.sendStatus(403);
-    }
+router.post('/login', async function (req, res, next) {
+    const data = req.body;
+    res.send(await usersRepo.login(data));
 });
 
 module.exports = router;

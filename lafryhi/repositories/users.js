@@ -129,7 +129,7 @@ module.exports = {
             if (result) {
                 if (result.password === data.password) {
                     const token = jwt.sign({id: result, role: result.role}, secret);
-                    return {code: 1, message: "Logged in successfully", token: token}
+                    return {code: 1, message: "Logged in successfully", role: result.role, token: token}
                 } else {
                     return {code: 2, message: "Incorrect password"}
                 }
