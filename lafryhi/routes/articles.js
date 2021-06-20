@@ -1,3 +1,5 @@
+const secret = 'fpm@DFG346&ƒgDFG346&ƒgdf#jd]}A{hbsfS43jdf#jd]}A{hbsfS43j';
+var jwt = require('express-jwt');
 var express = require('express');
 var router = express.Router();
 const articlesRepo = require('../repositories/articles')
@@ -33,24 +35,40 @@ router.get('/title/:title', async function (req, res, next) {
     res.send(await articlesRepo.getArticlesByTitle(title))
 });
 
-router.delete('/', async function (req, res, next) {
-    res.send(await articlesRepo.deleteAllArticles())
+router.delete('/', jwt({algorithms: ['HS256'], secret: secret}), async function (req, res, next) {
+    if (req.user.role === 'admin' || req.user.role === 'author') {
+        res.send(await articlesRepo.deleteAllArticles())
+    } else {
+        res.sendStatus(403);
+    }
 });
 
-router.delete('/:id', async function (req, res) {
-    const id = req.params.id;
-    res.send(await articlesRepo.deleteArticle(id))
+router.delete('/:id', jwt({algorithms: ['HS256'], secret: secret}), async function (req, res) {
+    if (req.user.role === 'admin' || req.user.role === 'author') {
+        const id = req.params.id;
+        res.send(await articlesRepo.deleteArticle(id))
+    } else {
+        res.sendStatus(403);
+    }
 });
 
-router.post('/', async function (req, res, next) {
-    const article = req.body;
-    res.send(await articlesRepo.addArticle(article))
+router.post('/', jwt({algorithms: ['HS256'], secret: secret}), async function (req, res, next) {
+    if (req.user.role === 'admin' || req.user.role === 'author') {
+        const article = req.body;
+        res.send(await articlesRepo.addArticle(article))
+    } else {
+        res.sendStatus(403);
+    }
 });
 
-router.put('/:id', async function (req, res, next) {
-    const id = req.params.id;
-    const article = req.body;
-    res.send(await articlesRepo.updateArticle(id, article))
+router.put('/:id', jwt({algorithms: ['HS256'], secret: secret}), async function (req, res, next) {
+    if (req.user.role === 'admin' || req.user.role === 'author') {
+        const id = req.params.id;
+        const article = req.body;
+        res.send(await articlesRepo.updateArticle(id, article));
+    } else {
+        res.sendStatus(403);
+    }
 });
 
 module.exports = router;

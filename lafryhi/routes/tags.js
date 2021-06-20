@@ -1,3 +1,5 @@
+const secret = 'fpm@DFG346&ƒgDFG346&ƒgdf#jd]}A{hbsfS43jdf#jd]}A{hbsfS43j';
+var jwt = require('express-jwt');
 var express = require('express');
 var router = express.Router();
 const tagsRepo = require('../repositories/tags')
@@ -16,31 +18,46 @@ router.get('/offset/:offset/limit/:limit', async function (req, res, next) {
     res.send(await tagsRepo.getTags(offset, limit))
 });
 
-
 router.get('/:id', async function (req, res, next) {
     const id = req.params.id;
     const message = await tagsRepo.getTag(id);
     res.status(message.status).send(message)
 });
 
-router.delete('/:id', async function (req, res, next) {
-    const id = req.params.id;
-    res.send(await tagsRepo.deleteTag(id))
+router.delete('/:id', jwt({algorithms: ['HS256'], secret: secret}), async function (req, res, next) {
+    if (req.user.role === 'admin' || req.user.role === 'author') {
+        const id = req.params.id;
+        res.send(await tagsRepo.deleteTag(id));
+    } else {
+        res.sendStatus(403);
+    }
 });
 
-router.delete('/', async function (req, res, next) {
-    res.send(await tagsRepo.deleteAllTags())
+router.delete('/', jwt({algorithms: ['HS256'], secret: secret}), async function (req, res, next) {
+    if (req.user.role === 'admin' || req.user.role === 'author') {
+        res.send(await tagsRepo.deleteAllTags());
+    } else {
+        res.sendStatus(403);
+    }
 });
 
-router.post('/', async function (req, res, next) {
-    const tag = req.body;
-    res.send(await tagsRepo.addTag(tag))
+router.post('/', jwt({algorithms: ['HS256'], secret: secret}), async function (req, res, next) {
+    if (req.user.role === 'admin' || req.user.role === 'author') {
+        const tag = req.body;
+        res.send(await tagsRepo.addTag(tag));
+    } else {
+        res.sendStatus(403);
+    }
 });
 
-router.put('/:id', async function (req, res, next) {
-    const id = req.params.id;
-    const tag = req.body;
-    res.send(await tagsRepo.updateTag(id, tag))
+router.put('/:id', jwt({algorithms: ['HS256'], secret: secret}), async function (req, res, next) {
+    if (req.user.role === 'admin' || req.user.role === 'author') {
+        const id = req.params.id;
+        const tag = req.body;
+        res.send(await tagsRepo.updateTag(id, tag));
+    } else {
+        res.sendStatus(403);
+    }
 });
 
 module.exports = router;

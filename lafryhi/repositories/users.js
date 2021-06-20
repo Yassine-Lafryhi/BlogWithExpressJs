@@ -1,4 +1,6 @@
+const secret = 'fpm@DFG346&ƒgDFG346&ƒgdf#jd]}A{hbsfS43jdf#jd]}A{hbsfS43j';
 const {User} = require('../models')
+const jwt = require('jsonwebtoken');
 module.exports = {
     getAllUsers() {
         return User.findAll().catch(error => {
@@ -121,5 +123,21 @@ module.exports = {
                 return {message: result.count}
             });
 
+    },
+    login(data) {
+        return User.findOne({where: {email: data.email}}).then(result => {
+            if (result) {
+                if (result.password === data.password) {
+                    const token = jwt.sign({id: result, role: result.role}, secret);
+                    return {code: 1, message: "Logged in successfully", token: token}
+                } else {
+                    return {code: 2, message: "Incorrect password"}
+                }
+            } else {
+                return {code: 3, message: "User not found !"}
+            }
+        }).catch(error => {
+            return {message: 'Error : ' + error.message}
+        });
     }
 }

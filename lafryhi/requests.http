@@ -29,14 +29,17 @@ Accept: application/json
 ### Delete user
 DELETE http://localhost:3000/users/3
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpZCI6MSwidXNlcm5hbWUiOiJBcmllbDE3IiwiZW1haWwiOiJUaG9tYXM0NEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjNKT3B1YVdTTlBUSSIsInJvbGUiOiJhZG1pbiIsImNyZWF0ZWRBdCI6IjIwMjEtMDQtMTFUMDc6NTQ6MjUuMDAwWiIsInVwZGF0ZWRBdCI6IjIwMjEtMDUtMTRUMDk6MTg6MTAuMDAwWiJ9LCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2MjQyMTI5NTZ9.r1eHgye3y4X7gUGlykGkUVX4oj1c_9hrYVBZjjV-YvU
 
 ### Delete all users
 DELETE http://localhost:3000/users
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpZCI6MSwidXNlcm5hbWUiOiJBcmllbDE3IiwiZW1haWwiOiJUaG9tYXM0NEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjNKT3B1YVdTTlBUSSIsInJvbGUiOiJhZG1pbiIsImNyZWF0ZWRBdCI6IjIwMjEtMDQtMTFUMDc6NTQ6MjUuMDAwWiIsInVwZGF0ZWRBdCI6IjIwMjEtMDUtMTRUMDk6MTg6MTAuMDAwWiJ9LCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2MjQyMTI5NTZ9.r1eHgye3y4X7gUGlykGkUVX4oj1c_9hrYVBZjjV-YvU
 
 ### Create new user
 POST http://localhost:3000/users
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpZCI6MSwidXNlcm5hbWUiOiJBcmllbDE3IiwiZW1haWwiOiJUaG9tYXM0NEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjNKT3B1YVdTTlBUSSIsInJvbGUiOiJhZG1pbiIsImNyZWF0ZWRBdCI6IjIwMjEtMDQtMTFUMDc6NTQ6MjUuMDAwWiIsInVwZGF0ZWRBdCI6IjIwMjEtMDUtMTRUMDk6MTg6MTAuMDAwWiJ9LCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2MjQyMTI5NTZ9.r1eHgye3y4X7gUGlykGkUVX4oj1c_9hrYVBZjjV-YvU
 
 {
   "username": "yassine",
@@ -58,6 +61,7 @@ GET http://localhost:3000/articles/87
 ### Add new article
 POST http://localhost:3000/articles
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpZCI6MSwidXNlcm5hbWUiOiJBcmllbDE3IiwiZW1haWwiOiJUaG9tYXM0NEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjNKT3B1YVdTTlBUSSIsInJvbGUiOiJhZG1pbiIsImNyZWF0ZWRBdCI6IjIwMjEtMDQtMTFUMDc6NTQ6MjUuMDAwWiIsInVwZGF0ZWRBdCI6IjIwMjEtMDUtMTRUMDk6MTg6MTAuMDAwWiJ9LCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2MjQyMTI5NTZ9.r1eHgye3y4X7gUGlykGkUVX4oj1c_9hrYVBZjjV-YvU
 
 {
   "title": "Test",
@@ -68,10 +72,12 @@ content-type: application/json
 
 ### Delete an article
 DELETE http://localhost:3000/articles/11
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpZCI6MSwidXNlcm5hbWUiOiJBcmllbDE3IiwiZW1haWwiOiJUaG9tYXM0NEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjNKT3B1YVdTTlBUSSIsInJvbGUiOiJhZG1pbiIsImNyZWF0ZWRBdCI6IjIwMjEtMDQtMTFUMDc6NTQ6MjUuMDAwWiIsInVwZGF0ZWRBdCI6IjIwMjEtMDUtMTRUMDk6MTg6MTAuMDAwWiJ9LCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2MjQyMTI5NTZ9.r1eHgye3y4X7gUGlykGkUVX4oj1c_9hrYVBZjjV-YvU
 
 ### Update an article
 PUT http://localhost:3000/articles/9
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpZCI6MSwidXNlcm5hbWUiOiJBcmllbDE3IiwiZW1haWwiOiJUaG9tYXM0NEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjNKT3B1YVdTTlBUSSIsInJvbGUiOiJhZG1pbiIsImNyZWF0ZWRBdCI6IjIwMjEtMDQtMTFUMDc6NTQ6MjUuMDAwWiIsInVwZGF0ZWRBdCI6IjIwMjEtMDUtMTRUMDk6MTg6MTAuMDAwWiJ9LCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2MjQyMTI5NTZ9.r1eHgye3y4X7gUGlykGkUVX4oj1c_9hrYVBZjjV-YvU
 
 {
   "title": "Test",
@@ -89,13 +95,12 @@ GET http://localhost:3000/users/12/articles
 ### Get article by title
 GET http://localhost:3000/articles/title/Test
 
-GET articles number
-###
+### GET articles number
 GET http://localhost:3000/articles?number
 
 
 ### Get all comments
-http://localhost:3000/comments
+GET http://localhost:3000/comments
 
 ### Get comments number
 GET http://localhost:3000/comments?number
@@ -112,6 +117,7 @@ GET http://localhost:3000/articles/5/comments
 ### Add new comment
 POST http://localhost:3000/comments
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpZCI6MSwidXNlcm5hbWUiOiJBcmllbDE3IiwiZW1haWwiOiJUaG9tYXM0NEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjNKT3B1YVdTTlBUSSIsInJvbGUiOiJhZG1pbiIsImNyZWF0ZWRBdCI6IjIwMjEtMDQtMTFUMDc6NTQ6MjUuMDAwWiIsInVwZGF0ZWRBdCI6IjIwMjEtMDUtMTRUMDk6MTg6MTAuMDAwWiJ9LCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2MjQyMTI5NTZ9.r1eHgye3y4X7gUGlykGkUVX4oj1c_9hrYVBZjjV-YvU
 
 {
   "content": "This is a comment content",
@@ -121,6 +127,7 @@ content-type: application/json
 ### Update a comment
 PUT http://localhost:3000/comments/11
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpZCI6MSwidXNlcm5hbWUiOiJBcmllbDE3IiwiZW1haWwiOiJUaG9tYXM0NEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjNKT3B1YVdTTlBUSSIsInJvbGUiOiJhZG1pbiIsImNyZWF0ZWRBdCI6IjIwMjEtMDQtMTFUMDc6NTQ6MjUuMDAwWiIsInVwZGF0ZWRBdCI6IjIwMjEtMDUtMTRUMDk6MTg6MTAuMDAwWiJ9LCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2MjQyMTI5NTZ9.r1eHgye3y4X7gUGlykGkUVX4oj1c_9hrYVBZjjV-YvU
 
 {
   "content": "This is a comment content",
@@ -129,6 +136,7 @@ content-type: application/json
 
 ### Delete a comment vy Id
 DELETE http://localhost:3000/comments/11
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpZCI6MSwidXNlcm5hbWUiOiJBcmllbDE3IiwiZW1haWwiOiJUaG9tYXM0NEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjNKT3B1YVdTTlBUSSIsInJvbGUiOiJhZG1pbiIsImNyZWF0ZWRBdCI6IjIwMjEtMDQtMTFUMDc6NTQ6MjUuMDAwWiIsInVwZGF0ZWRBdCI6IjIwMjEtMDUtMTRUMDk6MTg6MTAuMDAwWiJ9LCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2MjQyMTI5NTZ9.r1eHgye3y4X7gUGlykGkUVX4oj1c_9hrYVBZjjV-YvU
 
 
 ### Get all tags
@@ -143,6 +151,7 @@ GET http://localhost:3000/tags/3
 ### Add new tag
 POST http://localhost:3000/tags
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpZCI6MSwidXNlcm5hbWUiOiJBcmllbDE3IiwiZW1haWwiOiJUaG9tYXM0NEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjNKT3B1YVdTTlBUSSIsInJvbGUiOiJhZG1pbiIsImNyZWF0ZWRBdCI6IjIwMjEtMDQtMTFUMDc6NTQ6MjUuMDAwWiIsInVwZGF0ZWRBdCI6IjIwMjEtMDUtMTRUMDk6MTg6MTAuMDAwWiJ9LCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2MjQyMTI5NTZ9.r1eHgye3y4X7gUGlykGkUVX4oj1c_9hrYVBZjjV-YvU
 
 {
   "name": "Tag 1"
@@ -151,9 +160,19 @@ content-type: application/json
 ### Update a tag
 PUT http://localhost:3000/tags/11
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJpZCI6MSwidXNlcm5hbWUiOiJBcmllbDE3IiwiZW1haWwiOiJUaG9tYXM0NEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjNKT3B1YVdTTlBUSSIsInJvbGUiOiJhZG1pbiIsImNyZWF0ZWRBdCI6IjIwMjEtMDQtMTFUMDc6NTQ6MjUuMDAwWiIsInVwZGF0ZWRBdCI6IjIwMjEtMDUtMTRUMDk6MTg6MTAuMDAwWiJ9LCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2MjQyMTI5NTZ9.r1eHgye3y4X7gUGlykGkUVX4oj1c_9hrYVBZjjV-YvU
 
 {
   "name": "tag 2"
+}
+
+### Login to get JWT token
+POST http://localhost:3000/users/login
+content-type: application/json
+
+{
+  "email": "Thomas44@gmail.com",
+  "password": "3JOpuaWSNPTI"
 }
 
 
