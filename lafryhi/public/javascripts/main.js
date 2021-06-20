@@ -165,6 +165,32 @@ function getUsersList(offset) {
     });
 }
 
+function getArticlesList(offset) {
+    fetch('/articles/offset/' + offset + '/limit/' + 5, {
+        headers: {
+            'Accept': 'application/json',
+        },
+        method: 'GET'
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        $('#all-articles').html('');
+        for (var i = 0; i < data.length; i++) {
+            let element = '<div style="text-align: center" class="col-md-4">' +
+                '<div style="height: 260px; margin-bottom: 12px" class="card">' +
+                '<div class="card-header">' +
+                '<h5 style="text-align: center" class="card-title">'+data[i].title+'</h5>' +
+                '</div>' +
+                '<div class="card-body">' +
+                '<p>'+data[i].content+'</p>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+            $('#all-articles').append(element);
+        }
+    });
+}
+
 function sendUpdateRequest(id) {
     let username = document.getElementById("username").value;
     let email = document.getElementById("email").value;
@@ -299,10 +325,23 @@ function updateUser(id) {
 }
 
 
-function getNextElements() {
+function getNextArticles() {
     document.getElementById("previous").disabled = false;
     if (number < usersNumber) {
         getUsersList(number);
+        number += 5;
+    }
+    if (number === usersNumber) {
+        document.getElementById("next").disabled = true;
+        number -= 5;
+    }
+}
+
+
+function getNextElements() {
+    document.getElementById("previous").disabled = false;
+    if (number < usersNumber) {
+        getArticlesList(number);
         number += 5;
     }
     if (number === usersNumber) {
@@ -327,6 +366,20 @@ function getPreviousElements() {
 
 function getUsersNumber() {
     fetch('/users?number', {
+        method: 'GET'
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        usersNumber = parseInt(data.message);
+        getNextElements();
+        document.getElementById("previous").disabled = true;
+    });
+
+}
+
+
+function getArticlesNumber() {
+    fetch('/articles?number', {
         method: 'GET'
     }).then(function (response) {
         return response.json();
